@@ -26,7 +26,7 @@
   - 입력 : n개 수들의 수열  (A Sequence of n numbers <a1, a2, ... , an>)
   - 출력 : a1 ≤ a2 ≤ a3 ≤ ... ≤ an을 만족하는 입력 수열의 순열(재배치)   (A Permutation <b1, b2, ... , bn> of the input sequence such that b1 ≤ b2 ≤ ... ≤ bn)
   - 유사코드
-  '''
+  ~~~
   for j = 2 to A.length
     key = A[j]
     i = j-1
@@ -34,7 +34,7 @@
       A[i+1] = A[i]
       i = i-1
     A[i+1] = key
-  '''
+  ~~~
   - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/%EC%82%BD%EC%9E%85%EC%A0%95%EB%A0%AC.gif" width="500" height="300" />
   
   
