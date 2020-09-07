@@ -23,5 +23,8 @@
   > 시간, 공간 복잡도를 이용하여 알고리즘을 효율적으로 최적화한다.  
   
 ### 삽입정렬
-
+  - 입력 : n개 수들의 수열  (A Sequence of n numbers <a1, a2, ... , an>)
+  - 출력 : a1 ≤ a2 ≤ a3 ≤ ... ≤ an을 만족하는 입력 수열의 순열(재배치)   (A Permutation <b1, b2, ... , bn> of the input sequence such that b1 ≤ b2 ≤ ... ≤ bn)
+  
+  
     
