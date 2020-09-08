@@ -36,15 +36,14 @@
       A[i+1] = key
   ~~~
   - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/%EC%82%BD%EC%9E%85%EC%A0%95%EB%A0%AC.gif" width="500" height="300" />
-  
   - 성능 분석하기
   ~~~                                     cost          times
-   for j = 2 to A.length                  c~1~          n
-      key = A[j]                          
-      i = j-1
-      while i>0 and A[i] > key
-          A[i+1] = A[i]
-          i = i-1
-      A[i+1] = key
+   for j = 2 to A.length                  c₁            n
+      key = A[j]                          c₂            n-1
+      i = j-1                             c₃            n-1
+      while i>0 and A[i] > key            c₄            n-1
+          A[i+1] = A[i]                   c₅            Σ(j=2 ~ n) t<sub>j
+          i = i-1                         c₆
+      A[i+1] = key                        c₇
   ~~~
     
