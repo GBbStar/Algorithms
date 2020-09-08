@@ -35,7 +35,7 @@
           i = i-1
       A[i+1] = key
   ~~~
-  - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/%EC%82%BD%EC%9E%85%EC%A0%95%EB%A0%AC.gif" width="500" height="300" />
+  - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/%EC%82%BD%EC%9E%85%EC%A0%95%EB%A0%AC.gif" width="500" height="300" />  
   - 성능 분석하기
   ~~~                                     cost          times
    for j = 2 to A.length                  c₁            n
