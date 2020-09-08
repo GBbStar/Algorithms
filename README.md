@@ -39,7 +39,7 @@
   
   - 성능 분석하기
   ~~~                                     cost          times
-   for j = 2 to A.length                  c₁            n
+   for j = 2 to A.length                  c₁            bn
       key = A[j]                          c₂            n-1
       i = j-1                             c₃            n-1
       while i>0 and A[i] > key            c₄            Σtᴊ (j=2 ~ n)
@@ -62,47 +62,57 @@
   - 분할(정렬할 n개 원소의 배열을 n/2개씩 부분 수열 두개로 분할),   
     정복(합병정렬을 통해 두 부분배열을 재귀적으로 정렬),   
     결합(정렬된 두 부분배열을 병합해 정렬된 배열 하나로 만든다) 세가지 포인트가 존재. 
-  - 유사코드
+  - 유사코드 (보조 프로시저인 "결합" 과정)
   ~~~
-  Merge(A,p,q,r)  : A는 배열, p,q,r은 인덱스로 p <= q < r을 만족한다.
-      n₁ = q-p+1 
-      n₂ = r-q
-      배열 L[1 .. n₁+1]과 R[1 .. n₂+1]을 생성한다.
+  Merge(A,p,q,r)  : A는 배열, p,q,r은 인덱스로 p <= q < r을 만족한다.                  cost           times
+      n₁ = q-p+1                                                                      c₁             1
+      n₂ = r-q                                                                        c₂             1
+      배열 L[1 .. n₁+1]과 R[1 .. n₂+1]을 생성한다                                      c₃             1
       
-      for i = 1 to n₁ 
-          L[i] = A[p+i-1]
+      for i = 1 to n₁                                                                 c₄             n₁
+          L[i] = A[p+i-1]                                                             c₅             1
       
-      for j = 1 to n₂  
-          R[j] = A[q+j]
+      for j = 1 to n₂                                                                 c₆             n₂
+          R[j] = A[q+j]                                                               c₇             1
       
-      L[n₁+1] = ∞
-      R[n₂+1] = ∞
-      i = 1
-      j = 1
+      L[n₁+1] = ∞                                                                     c₈             1
+      R[n₂+1] = ∞                                                                     c₉             1
+      i = 1                                                                           c₁₀            1
+      j = 1                                                   
       
-      for k = p to r
-          if L[i] <= R[j]
-              A[k] = L[i]
-              i = i+1
-          else A[k] = R[j]
-              j = j+1
+      for k = p to r                                                                  c₁₁            n
+          if L[i] <= R[j]                                                             c₁₂            c
+              A[k] = L[i]                                                             c₁₃            1
+              i = i+1                                                                 c₁₄            1
+          else A[k] = R[j]                                                            c₁₅            1
+              j = j+1                                                                 c₁₆            1
   ~~~
-  - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/%ED%95%A9%EB%B3%91%EC%A0%95%EB%A0%AC.gif" width="500" height="300" />  
+      > T(n) = c₄n₁ + c₆n₂ + c₁₁n + C
+      > T(n) = an + b = Θ(n)
+     
   
-  - 성능 분석하기
+  - 유사코드 (합병정렬 전체 과정)
   ~~~                                                                                     
-     Merge(A,p,r)
+     Merge-Sort(A,p,r)
         if p < r
             q = ⌊(p+r)/2⌋
-            Merge(A,p,q)
-            Merge(A,q+1,r)
+            Merge-Sort(A,p,q)
+            Merge-Sort(A,q+1,r)
             Merge(A,p,q,r)
   ~~~
-      > if n이 충분히 작아 상수 C보다 작을 때, T(n) = Θ(1)
+      # 분할정복 분석
+      > 크기 n이 충분히 작아 n <= c 조건을 만족할 경우, T(n) = Θ(1)
       > 다른 모든 경우엔, T(n) = aT(n/b) + D(n) + C(n)
       *) 지금까지 a=b인 상황을 봤지만, 같지 않은 상황에서도 적용이 가능한 알고리즘도 분석할 예정  
       *) D(n)은 문제를 분할하는데 걸리는 시간, C(n) 부분 문제들의 해를 결합하여 원래 문제의 해를 만드는데 걸리는 시간  
       
+      # 합병정렬 분석
+      > 분할 : 부분 배열의 중간 위치를 계산하는 과정, 상수 시간이 걸린다. (D(n) = Θ(1))
+      > 정복 : 두 개의 부분 문제를 재귀적으로 풀면서, 각 부분 문제는 크기가 n/2로 줄어든다. (2T(n/2))
+      > 결합 : 앞서 보았듯, Merge 프로시저는 Θ(n) 시간이 걸린다. (C(n) = Θ(n))
+      따라서, T(n) = 2T(n/2) + Θ(n) (n>1) / T(n) = Θ(1) (n=1)
       
-      > 분할 : 
+      
+  - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/%ED%95%A9%EB%B3%91%EC%A0%95%EB%A0%AC.gif" width="500" height="300" />  
+  
  <hr/>
