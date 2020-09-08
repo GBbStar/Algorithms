@@ -87,22 +87,21 @@
           else A[k] = R[j]
               j = j+1
   ~~~
-  - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/%EC%82%BD%EC%9E%85%EC%A0%95%EB%A0%AC.gif" width="500" height="300" />  
+  - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/%ED%95%A9%EB%B3%91%EC%A0%95%EB%A0%AC.gif" width="500" height="300" />  
   
   - 성능 분석하기
-  ~~~                                     cost          times
-   for j = 2 to A.length                  c₁            n
-      key = A[j]                          c₂            n-1
-      i = j-1                             c₃            n-1
-      while i>0 and A[i] > key            c₄            Σtᴊ (j=2 ~ n)
-          A[i+1] = A[i]                   c₅            Σ(tᴊ-1) (j=2 ~ n)
-          i = i-1                         c₆            Σ(tᴊ-1) (j=2 ~ n)
-      A[i+1] = key                        c₇            n-1
-      
-      *) tᴊ는 j가 2, 3, .., n 일때, while 루프의 검사가 실행되는 횟수를 의미
+  ~~~                                                                                     
+     Merge(A,p,r)
+        if p < r
+            q = ⌊(p+r)/2⌋
+            Merge(A,p,q)
+            Merge(A,q+1,r)
+            Merge(A,p,q,r)
   ~~~
-    > 수행시간은 각 명령문 수행시간의 합  
-    > T(n) = c₁n + c₂(n-1) + c₃(n-1) + c₄Σtᴊ (j=2 ~ n) + c₅Σ(tᴊ-1) (j=2 ~ n) + c₆Σ(tᴊ-1) (j=2 ~ n) + c₇(n-1)  
-    > (최악의 경우) T(n) = c₁n + c₂(n-1) + c₃(n-1) + c₄(n(n+1)/2-1) + c₅(n(n-1)/2)+ c₆(n(n-1)/2) + c₇(n-1)  
-    > (최악의 경우) T(n) = an² + bn + c
+      > if n이 충분히 작아 상수 C보다 작을 때, T(n) = Θ(1)
+      > 다른 모든 경우엔, T(n) = aT(n/b) + D(n) + C(n)
+      *) 지금까지 a=b인 상황을 봤지만, 같지 않은 상황에서도 적용이 가능한 알고리즘도 분석할 예정  
+      *) D(n)은 문제를 분할하는데 걸리는 시간, C(n) 부분 문제들의 해를 결합하여 원래 문제의 해를 만드는데 걸리는 시간  
+      <br/>
+      > 분할 : 
  <hr/>
