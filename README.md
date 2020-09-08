@@ -42,7 +42,7 @@
       key = A[j]                          c₂            n-1
       i = j-1                             c₃            n-1
       while i>0 and A[i] > key            c₄            n-1
-          A[i+1] = A[i]                   c₅            Σ(j=2 ~ n) t<sub>j
+          A[i+1] = A[i]                   c₅            Σ(j=2 ~ n) t<sub>j</sub>
           i = i-1                         c₆
       A[i+1] = key                        c₇
   ~~~
