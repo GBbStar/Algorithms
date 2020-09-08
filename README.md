@@ -41,11 +41,14 @@
    for j = 2 to A.length                  c₁            n
       key = A[j]                          c₂            n-1
       i = j-1                             c₃            n-1
-      while i>0 and A[i] > key            c₄            Σ(j=2 ~ n) tᴊ
-          A[i+1] = A[i]                   c₅            Σ(j=2 ~ n) (tᴊ-1)
-          i = i-1                         c₆            Σ(j=2 ~ n) (tᴊ-1)
+      while i>0 and A[i] > key            c₄            Σtᴊ (j=2 ~ n)
+          A[i+1] = A[i]                   c₅            Σ(tᴊ-1) (j=2 ~ n)
+          i = i-1                         c₆            Σ(tᴊ-1) (j=2 ~ n)
       A[i+1] = key                        c₇            n-1
       
       *) tᴊ는 j가 2, 3, .., n 일때, while 루프의 검사가 실행되는 횟수를 의미
   ~~~
-    
+    > 수행시간은 각 명령문 수행시간의 합  
+    > T(n) = c₁n + c₂(n-1) + c₃(n-1) + c₄Σtᴊ (j=2 ~ n) + c₅Σ(tᴊ-1) (j=2 ~ n) + c₆Σ(tᴊ-1) (j=2 ~ n) + c₇(n-1)  
+    > (최악의 경우) T(n) = c₁n + c₂(n-1) + c₃(n-1) + c₄(n(n+1)/2-1) + c₅(n(n-1)/2)+ c₆(n(n-1)/2) + c₇(n-1)  
+    > (최악의 경우) T(n) = an² + bn + c
