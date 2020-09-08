@@ -56,3 +56,51 @@
  <hr/>
  
  
+### 합병정렬
+  - 입력 : n개 수들의 수열  (A Sequence of n numbers <a1, a2, ... , an>)
+  - 출력 : a1 ≤ a2 ≤ a3 ≤ ... ≤ an을 만족하는 입력 수열의 순열(재배치)   (A Permutation <b1, b2, ... , bn> of the input sequence such that b1 ≤ b2 ≤ ... ≤ bn)
+  - 분할(정렬할 n개 원소의 배열을 n/2개씩 부분 수열 두개로 분할), 정복(합병정렬을 통해 두 부분배열을 재귀적으로 정렬), 결합(정렬된 두 부분배열을 병합해 정렬된 배열 하나로     만든다) 세가지 포인트가 존재. 
+  - 유사코드
+  ~~~
+  Merge(A,p,q,r)  : A는 배열, p,q,r은 인덱스로 p <= q < r을 만족한다.
+      n₁ = q-p+1 
+      n₂ = r-q
+      배열 L[1 .. n₁+1]과 R[1 .. n₂+1]을 생성한다.
+      
+      for i = 1 to n₁ 
+          L[i] = A[p+i-1]
+      
+      for j = 1 to n₂  
+          R[j] = A[q+j]
+      
+      L[n₁+1] = ∞
+      R[n₂+1] = ∞
+      i = 1
+      j = 1
+      
+      for k = p to r
+          if L[i] <= R[j]
+              A[k] = L[i]
+              i = i+1
+          else A[k] = R[j]
+              j = j+1
+  ~~~
+  - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/%EC%82%BD%EC%9E%85%EC%A0%95%EB%A0%AC.gif" width="500" height="300" />  
+  
+  - 성능 분석하기
+  ~~~                                     cost          times
+   for j = 2 to A.length                  c₁            n
+      key = A[j]                          c₂            n-1
+      i = j-1                             c₃            n-1
+      while i>0 and A[i] > key            c₄            Σtᴊ (j=2 ~ n)
+          A[i+1] = A[i]                   c₅            Σ(tᴊ-1) (j=2 ~ n)
+          i = i-1                         c₆            Σ(tᴊ-1) (j=2 ~ n)
+      A[i+1] = key                        c₇            n-1
+      
+      *) tᴊ는 j가 2, 3, .., n 일때, while 루프의 검사가 실행되는 횟수를 의미
+  ~~~
+    > 수행시간은 각 명령문 수행시간의 합  
+    > T(n) = c₁n + c₂(n-1) + c₃(n-1) + c₄Σtᴊ (j=2 ~ n) + c₅Σ(tᴊ-1) (j=2 ~ n) + c₆Σ(tᴊ-1) (j=2 ~ n) + c₇(n-1)  
+    > (최악의 경우) T(n) = c₁n + c₂(n-1) + c₃(n-1) + c₄(n(n+1)/2-1) + c₅(n(n-1)/2)+ c₆(n(n-1)/2) + c₇(n-1)  
+    > (최악의 경우) T(n) = an² + bn + c
+ <hr/>
