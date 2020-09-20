@@ -164,7 +164,7 @@
   -수학적 귀납법을 사용한다.
     1) 초항에 대한 증명을 보여준다.
     2) n = k-1까지의 모든 경우에서 해당 점화식이 참임을 가정한다.
-    3) n = k일때 점화식이 참임을 증명한다.
+    3) n = k일때 점화식이 참임을 증명한다.  
     ex)  
       ~~~
       T(n) = O(n*log n)을 증명하라
@@ -190,9 +190,6 @@
  - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/%ED%95%A9%EB%B3%91%EC%A0%95%EB%A0%AC_%EC%9E%AC%EA%B7%80%ED%8A%B8%EB%A6%AC2.png" width="500" height="300" />
  - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/%ED%95%A9%EB%B3%91%EC%A0%95%EB%A0%AC_%EC%9E%AC%EA%B7%80%ED%8A%B8%EB%A6%AC3.png" width="500" height="300" /> 
   ex)
-   ~~~
-   
-   ~~~
   
 
       
