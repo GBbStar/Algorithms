@@ -192,7 +192,7 @@
     - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/%ED%95%A9%EB%B3%91%EC%A0%95%EB%A0%AC_%EC%9E%AC%EA%B7%80%ED%8A%B8%EB%A6%AC3.png" width="500" height="300" />
   <br/><br/><br/>
   2) 사례로 이해하기  
-      ex)   
+      ex)  
         ~~~
           T(n) = 2T(n/2)+n
           계층을 i로 두었을 때, 각 층의 노드 갯수는 2^i이다.
