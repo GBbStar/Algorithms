@@ -160,11 +160,11 @@
   - 보통 등식의 꼴을 띄지만, 간혹 부등식 형태의 점화식도 사용된다.(부등식의 경우 빅오 또는 오메가 표기를 통해 사용한다.)
 
 * 치환법
-  - 수학적 귀납법을 사용한다.
+  수학적 귀납법을 사용한다.
     1) 초항에 대한 증명을 보여준다.
     2) n = k-1까지의 모든 경우에서 해당 점화식이 참임을 가정한다.
     3) n = k일때 점화식이 참임을 증명한다.
-    ex)
+    ex)  
       ~~~
       T(n) = O(n*log n)을 증명하라
       1) 초항을 증명하라 / 정의역 n은 1보다 큰 자연수다. & T(1) = 1 & T(n) = 2T(n/2) + n
@@ -185,6 +185,9 @@
       ~~~
 
 * 재귀 트리 방법
+ - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/%ED%95%A9%EB%B3%91%EC%A0%95%EB%A0%AC_%EC%9E%AC%EA%B7%80%ED%8A%B8%EB%A6%AC.png" width="500" height="300" />
+ - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/%ED%95%A9%EB%B3%91%EC%A0%95%EB%A0%AC_%EC%9E%AC%EA%B7%80%ED%8A%B8%EB%A6%AC2.png" width="500" height="300" />
+ - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/%ED%95%A9%EB%B3%91%EC%A0%95%EB%A0%AC_%EC%9E%AC%EA%B7%80%ED%8A%B8%EB%A6%AC3.png" width="500" height="300" /> 
   ex)
    ~~~
    
