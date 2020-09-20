@@ -192,7 +192,22 @@
     - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/%ED%95%A9%EB%B3%91%EC%A0%95%EB%A0%AC_%EC%9E%AC%EA%B7%80%ED%8A%B8%EB%A6%AC3.png" width="500" height="300" />
   <br/><br/><br/>
   2) 사례로 이해하기  
-    ex)
-  
+      ex) 
+      ~~~
+        T(n) = 2T(n/2)+n
+        계층을 i로 두었을 때, 각 층의 노드 갯수는 2^i이다.
+        또한 계층이 i일때, T(n)에서 n의 식은 n/2^i로 표현할 수 있다. 
+        이때 가장 하층의 T(1)이 위치하게 되는데. 이는 즉 마지막 층 i 일때, n의 식이 1이 나온다를 의미한다. 이를 식으로 정리하면,
+        n/2^i = 1 
+        > n = 2^i
+        > i = log₂n
+          ∴ 마지막 층의 노드 갯수는 2^i 즉 2^log₂n = n이다.
+          ∴ 각 계층별로의 합들은 해당 계층의 노드들을 다 더한 것과 같고, 전체 시간 T(n)은 모든 노드를 더한 것과 같다.
+             = n + n + ... + n (개수는 높이인 i 즉 log₂n)
+             = n * log₂n
+             <= c * (n * log₂n)
+             = O(n * log₂n)을 만족한다.
+             
+      ~~~
 
       
