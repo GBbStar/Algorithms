@@ -234,7 +234,41 @@
             3^k₁ = n                   n = (3/2)^k₂
             k₁ = log₃n                 k₂ = log(3/2)n
           
-          3) 
+          3) ∴ k1 <= level <= k2
+                = log₃n <= level <= log(3/2)n
+          
+          4) 각 레벨에서 노드의 합은 n,  T(n)은 모든 노트의 합임
+             ∴ n*log₃n <= T(n) <= n*log(3/2)n
+                = n*(log₂n/log₂3) <= T(n) <= n*(log₂n/log₂(3/2))
+                = n*log₂n*c1 <= T(n) <= n*log₂n*c2
+          
+          5) ∴ T(n) <= c*n*log₂n 
+                >T(n) = O(n*log₂n) 
+        
+        
+        * 증명하기 / T(n) = T(n/3) + T(2n/3) + n
+        1) base case 
+            T(3) = T(1) + T(2) + 3 <= d * 3 * log₂3
+            T(1), T(2)는 더 이상 분기할 수 없음(상수 시간 소모)
+            ∴ 5 <= d * 3 * log₂3
+               5 - 3*log₂3 <= d를 만족하는 d가 1개라도 존재... 증명됨
+               
+        2) n < k 일때 참이라고 가정
+        3) n = k일 때 증명하기
+            T(k) = T(k/3) + T(2k/3) + k    
+            T(k/3), T(2k/3) 은 모두 n < k인 case. 따라서 전제에 의해 <= d*n*log₂n를 만족
+            ∴ T(k/3) + T(2k/3) + k <= d*(1/3)*k*(log₂k - log₂3) + d*(2/3)*k*((1+log₂k) - log₂3) + k
+                                    <= d*k*log₂k + k - d*k*(log₂3 - (2/3)) ... <= d*k*log₂k
+            ∴ T(n) <= d*n*log₂n
+            
+            
+                                
+                                    
+                                    
+            
+      
+            
        ~~~
+        
         
       
