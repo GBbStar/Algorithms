@@ -308,6 +308,19 @@
         MAX-HEAPIFY(A, largest)
   ~~~
   나. MAX-HEAPIFY Worst Case
-      (1) 왼쪽부터 노드가 차기 때문에, 루프가 가장 많이 도는 최악의
+      (1) 왼쪽부터 노드가 차기 때문에, 항상 왼쪽의 노드 수가 오른쪽보다 많거나 같다.
+      (2) 따라서 최악의 경우는, 왼쪽 노드를 타고 탐색하는 것이 최악의 경우이다.
+      (3) 이떄, T(n) <= T(2n/3) + Ω(1)
+  
+  다. BUILD-MAX-HEAP 아이디어
+  ~~~
+    BUILD-MAX-HEAP(A)
+      A.heap-size = A.length
+      for i = ⌊A.length/2⌋ downto 1
+        MAX-HEAPIFY(A,i)  
+  ~~~
+  
+  라. BUILD-MAX-HEAP 
+      
 
 
