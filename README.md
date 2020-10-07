@@ -283,12 +283,29 @@
     즉, 힙의 노드 개수 n은 다음과 같은 범위에 들어온다.
     2^k <= n <= 2^k+1 -1 < 2^k+1
     ∴ k <= lg n < k+1
-  
+       k = ⌊lg n⌋  즉, 노드 개수가 n개인 힙의 높이는 ⌊lg n⌋이다.
   ~~~
+
 2. heap-size와 length   
   가. 배열의 인자들
   나. length는 배열이 가지는 원소의 개수를, heap-size는 배열의 원소 중 힙에 속하는 원소의 개수를 의미한다.
-  다. 즉, 1 ~ length까지의 값들이 모두 유용할 순 있지만, 힙에 속하는 원소는 1 ~ heap-size 까지이다.
+  다. 즉, 1 ~ length까지의 값들이 모두 유용할 순 있지만, 힙에 속하는 원소는 1 ~ heap-size 까지이다.  
+      
+
 3. MAX-HEAPIFY, BUILD-MAX-HEAP, HEAPSORT
+  가. MAX-HEAPIFY 아이디어
+  ~~~
+    MAX-HEAPIFY(A,i)
+      l = LEFT(i)
+      r = RIGHT(i)
+      if l <= A.heap-size and A[l] > A[i]
+        largest = l
+      else largest = i
+      if r<= A.heap-size and A[r] > A[i]
+        largest = r
+      if largest != i
+        exchange A[i] with A[largest]
+        MAX-HEAPIFY(A, largest)
+  ~~~
 
 
