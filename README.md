@@ -307,5 +307,7 @@
         exchange A[i] with A[largest]
         MAX-HEAPIFY(A, largest)
   ~~~
+  나. MAX-HEAPIFY Worst Case
+      (1) 왼쪽부터 노드가 차기 때문에, 루프가 가장 많이 도는 최악의
 
 
