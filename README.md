@@ -574,6 +574,9 @@
         > 한 서브트리를 다른 서브 트리로 교체하는 루틴
        
     (2) TREE DELETE
+    - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/binary-search-tree-deletion-algorithm.jpg" width="500" height="300" />
+    - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/delete-leaf-node-in-binary-search-tree.jpg" width="500" height="300" />  
+    - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/delete-node-in-binary-search-tree.jpg" width="500" height="300" />    
     ~~~
         TREE-DELETE(T,z)
             if z.left == NIL
