@@ -327,21 +327,26 @@
 - 기본 설명
   (1) 트리
       하나의 부모의 다수의 자식들이 올 수 있다
+  
   (2) 이진 트리
       각 노드마다 0~2의 자식을 갖는 트리
+  
   (3) 검색 트리를 이루는 요소
       [1] 검색, 최소, 최대, 직전, 직후, 삽입, 삭제 등
       [2] 딕셔너리와 우선순위 큐를 이용
       [3] 기본 연산은 트리의 높이에 비례한다
+  
   (4) 트리별 높이 시간 복잡도
       [1] 완전 이진 트리 : Ω(lg n)
       [2] 선형 체인 트리 : Ω(n)
       [3] 임의로 만들어진 이진 트리 : O(lg n)
+  
   (5) 용어
       [1] 루트 : 조상이 없다
       [2] 리프 : 자식이 없다
       [3] 내부 : 리프가 아닌 노드
       [4] 높이 : 루트에서 리프까지의 거리
+  
   (6) 이진 트리의 종류
       [1] Degenerate
           오직 한명의 자식을 갖는 트리
@@ -353,7 +358,8 @@
           높이 : O(lg n) (n개의 노드에서)
       [3] Complete
           항상 두명의 자식을 갖는 트리
-          
+       
+       
 - 이진 검색 트리의 개념, 특성
   (1) 이진 검색 트리의 개념
       key, 데이터, left(왼쪽 자식), right(오른쪽 자식), p(부모) 등의 필드를 갖는다.     
@@ -362,11 +368,143 @@
   (3) 구현 관점의 특성
       연결된 데이터 구조로 표현됨(각 노드는 객체를 의미)   > 키 + 위성 데이터
 
-- 이진 검색 트리의 높이
-
+  
 - 이진 검색 트리 순회
+  > 트리의 각 노드에서 재귀적으로 호출하므로, n개의 노드로 이루어진 이진 검색 트리에서 Θ(n)을 만족
+  
+  (1) 전위 트리 순회
+    ~~~
+        PREORDER-TREE-WALK(x)
+            if x != NIL
+                print x.key
+                PREORDER-TREE-WALK(x.left)           
+                PREORDER-TREE-WALK(x.right)
+    ~~~ 
+        
+    
+    > 시간 복잡도
+    ~~~
+        1. BaseCase
+        2. n이 k보다 작을때, 참이라고 가정
+        3. n이 k일때, 증명
+    ~~~
+        >  
+        
+  (2) 중위 트리 순회
+    ~~~
+        INORDER-TREE-WALK(x)
+            if x != NIL
+                INORDER-TREE-WALK(x.left)           
+                print x.key
+                INORDER-TREE-WALK(x.right)
+    ~~~ 
+    
+    > 시간 복잡도
+    ~~~
+        1. BaseCase
+        2. n이 k보다 작을때, 참이라고 가정
+        3. n이 k일때, 증명
+    ~~~
+        > n개의 노드로 이루어진 서브 트리의 루트에 대하여 호출시, 걸리는 시간을 T(n)이라 한다.
+          중위 트리 순회는 n개의 노드를 모두 방문하기에, T(n) = Ω(n)
+        > 빈 트리의 경우, 상수 c>0에 대해 T(0) = c (경미한 상수 시간 소모)         
+        > n>0의 경우 왼쪽 서브 트리가 k개의 노드를, 오른쪽의 서브 트리가 n-k-1을 갖는다.
+          이를 다시 표현하면 T(n) <= T(k) + T(n-k-1) + d
+        > 치환을 통해, T(n) <= (c+d)n + c를 증명
+          1) n = 0
+            (c+d) * 0 + c = c = T(0)
+          2) T(n) <= T(k) + T(n-k-1) + d
+                  <= ((c+d)k + c) + ((c+d)(n-k-1) + c) + d
+                  <= (c+d)n + c - (c+d) + c + d
+                  <= (c+d)n + c
+                  
+    
+  (3) 후위 트리 순회
+    ~~~
+        POSTORDER-TREE-WALK(x)
+            if x != NIL
+                POSTORDER-TREE-WALK(x.left)           
+                POSTORDER-TREE-WALK(x.right)
+                print x.key
+    ~~~ 
+    
+    
+    
 - 이진 검색 트리 검색
+    ~~~
+        TREE-SEARCH(x,k)
+            if x == NIL or K == x.key
+                return x
+            if k < x.key
+                return TREE-SEARCH(x.left, k)
+            else
+                return TREE-SEARCH(x.right, k)
+    ~~~ 
+    > 시간 복잡도
+    ~~~
+        1. BaseCase
+        2. n이 k보다 작을때, 참이라고 가정
+        3. n이 k일때, 증명
+    ~~~
+        > 트리의 높이가 h일때, O(h)
+
+
+
 - 이진 검색 트리 최소, 최대 원소
+    (1) 최소 원소
+    ~~~
+        TREE-MINIMUM(x)
+            while x.left != NIL
+                x = x.left
+            return x
+    ~~~ 
+    
+    (2) 최대 원소
+    ~~~
+        TREE-MAXIMUM(x)
+            while x.right != NIL
+                x = x.right
+            return x
+    ~~~ 
+     
+     > 시간 복잡도
+    ~~~
+        1. BaseCase
+        2. n이 k보다 작을때, 참이라고 가정
+        3. n이 k일때, 증명
+    ~~~
+        > 트리의 높이가 h일때, O(h)
+        > 이진 탐색 트리의 특성이 해당 알고리즘의 정확함을 보장한다. 이는 루트로부터 내려가는 하나의 단순 경로에 존재함을 보장
+
+
+
 - 이진 검색 트리 직후, 직전 원소
+    (1) 직후 원소
+    ~~~
+        TREE-MINIMUM(x)
+            while x.left != NIL
+                x = x.left
+            return x
+    ~~~ 
+    
+    (2)  원소
+    ~~~
+        TREE-MAXIMUM(x)
+            while x.right != NIL
+                x = x.right
+            return x
+    ~~~ 
+     
+     > 시간 복잡도
+    ~~~
+        1. BaseCase
+        2. n이 k보다 작을때, 참이라고 가정
+        3. n이 k일때, 증명
+    ~~~
+        > 트리의 높이가 h일때, O(h)
+        > 이진 탐색 트리의 특성이 해당 알고리즘의 정확함을 보장한다. 이는 루트로부터 내려가는 하나의 단순 경로에 존재함을 보장
+        
+        
+        
 - 이진 검색 트리 삽입
 - 이진 검색 트리 삭제 & TRANSPLANT
