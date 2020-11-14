@@ -481,18 +481,32 @@
 - 이진 검색 트리 직후, 직전 원소
     (1) 직후 원소
     ~~~
-        TREE-MINIMUM(x)
-            while x.left != NIL
-                x = x.left
-            return x
+        TREE-SUCCESSOR(x)
+            if x.right != NIL
+                return TREE-MINIMUM(x.right)
+            
+            y = x.p
+            
+            while y != NIL and x == y.right
+                x = y
+                y = y.p
+            
+            return y
     ~~~ 
     
-    (2)  원소
+    (2) 직전 원소
     ~~~
-        TREE-MAXIMUM(x)
-            while x.right != NIL
-                x = x.right
-            return x
+        TREE-PREDECESSOR(x)
+            if x.left != NIL
+                return TREE-MAXIMUM(x.left)
+                
+            y = x.p
+            
+            while y != NIL and x == y.left
+                x = y
+                y = y.p
+                
+            return y
     ~~~ 
      
      > 시간 복잡도
@@ -507,4 +521,80 @@
         
         
 - 이진 검색 트리 삽입
+    ~~~
+        TREE-INSERT(T,z)
+            y = NIL
+            x = T.root
+            
+            while x != NIL
+                y = x
+                if z.key < x.key
+                    x = x.left
+                else 
+                    x = x.right
+            
+            z.p = y
+            
+            if y == NIL
+                T.root = z
+            else if z.key < y.key
+                y.left = z
+            else 
+                y.right = z
+    ~~~ 
+    
+     > 시간 복잡도
+    ~~~
+        1. BaseCase
+        2. n이 k보다 작을때, 참이라고 가정
+        3. n이 k일때, 증명
+    ~~~
+        > 트리의 높이가 h일때, O(h)
+  
+
+
+
+
 - 이진 검색 트리 삭제 & TRANSPLANT
+    (1) TRANSPLANT
+    ~~~
+        TRANSPLANT(T,u,v)
+            if u.p == NIL               -- if u doesn't have a parent => u is the root
+                T.root = v              --   then v must replace u as the root of the tree T
+             
+            else if u == u.p.left       -- if u is a left subtree of its parent
+                u.p.left = v            --   then v must replace u as the left
+                                        --   subtree of u's parent
+            else                        -- otherwise u is a right subtree 
+                u.p.right = v           --   (as the tree is binary) and v must replace
+                                        --   u as the right subtree of u's parent
+            if v != NIL                 -- if v has replaced u (and thus is not NIL)
+                v.p = u.p               --   v must have the same parent as u
+    ~~~ 
+        > 한 서브트리를 다른 서브 트리로 교체하는 루틴
+       
+    (2) TREE DELETE
+    ~~~
+        TREE-DELETE(T,z)
+            if z.left == NIL
+                TRANSPLANT(T,z,z.right)
+            else if z.right == NIL
+                TRANSPLANT(T,z,z.left)
+            else
+                y = TREE-MINIMUM(z.right)
+                if y.p != NIL
+                    TRANSPLANT(T,y,y.right)
+                    y.right = z.right
+                    y.right.p = y
+                TRANSPLANT(T,z,y)
+                y.left = z.left
+                y.left.p = y
+    ~~~ 
+     
+     > 시간 복잡도
+    ~~~
+        1. BaseCase
+        2. n이 k보다 작을때, 참이라고 가정
+        3. n이 k일때, 증명
+    ~~~
+        > 트리의 높이가 h일때, O(h)
