@@ -610,25 +610,25 @@
 <hr/>
 ### AVL Trees
 
-- 기본 설명
-    (1) 이진 탐색 트리의 성질을 기반으로 가짐
-    (2) 트리 내의 어떤 노드에서든, 노드 기준 좌측 서브트리의 높이와 우측 서브트리의 높이 차이는 최대 1이다.
+    - 기본 설명
+        (1) 이진 탐색 트리의 성질을 기반으로 가짐
+        (2) 트리 내의 어떤 노드에서든, 노드 기준 좌측 서브트리의 높이와 우측 서브트리의 높이 차이는 최대 1이다.
 
-- AVL 트리의 특성
-    뿌리 왼쪽과 오른쪽 하위 트리의 높이가 최대 1씩 차이가 나고, 오른쪽 및 왼쪽 하위 트리도 AVL 트리인 BST이다.
+    - AVL 트리의 특성
+        뿌리 왼쪽과 오른쪽 하위 트리의 높이가 최대 1씩 차이가 나고, 오른쪽 및 왼쪽 하위 트리도 AVL 트리인 BST이다.
 
-- AVL에서의 삽입
-    (1) BST와 마찬가지로 각 노드별 높이 균형을 보장하기 위한 회전을 통한 운영
-    (2) 4가지의 경우 존재
-        [1] Single Left Rotation
-        [2] Double Left Rotation
-        [3] Single Right Rotation
-        [4] Double Right Rotation
-        > SLR, DLR : left(+2)
-        > SRR, DRR : right(-2)
-         - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case1.png" width="1000" height="300" />
-         - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case2.png" width="1000" height="300" />
-         - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case3.png" width="1000" height="300" /> 
+    - AVL에서의 삽입
+        (1) BST와 마찬가지로 각 노드별 높이 균형을 보장하기 위한 회전을 통한 운영
+        (2) 4가지의 경우 존재
+            [1] Single Left Rotation
+            [2] Double Left Rotation
+            [3] Single Right Rotation
+            [4] Double Right Rotation
+            > SLR, DLR : left(+2)
+            > SRR, DRR : right(-2)
+            - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case1.png" width="1000" height="300" />
+            - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case2.png" width="1000" height="300" />
+            - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case3.png" width="1000" height="300" /> 
         
   (3) 검색 트리를 이루는 요소
       [1] 검색, 최소, 최대, 직전, 직후, 삽입, 삭제 등
