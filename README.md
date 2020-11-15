@@ -610,112 +610,23 @@
 
 ## AVL Trees
     
-    - 기본 설명
-        (1) 이진 탐색 트리의 성질을 기반으로 가짐
-        (2) 트리 내의 어떤 노드에서든, 노드 기준 좌측 서브트리의 높이와 우측 서브트리의 높이 차이는 최대 1이다.
+  - 기본 설명
+      (1) 이진 탐색 트리의 성질을 기반으로 가짐
+      (2) 트리 내의 어떤 노드에서든, 노드 기준 좌측 서브트리의 높이와 우측 서브트리의 높이 차이는 최대 1이다.
 
-    - AVL 트리의 특성
-        뿌리 왼쪽과 오른쪽 하위 트리의 높이가 최대 1씩 차이가 나고, 오른쪽 및 왼쪽 하위 트리도 AVL 트리인 BST이다.
+  - AVL 트리의 특성
+      뿌리 왼쪽과 오른쪽 하위 트리의 높이가 최대 1씩 차이가 나고, 오른쪽 및 왼쪽 하위 트리도 AVL 트리인 BST이다.
 
-    - AVL에서의 삽입
-        (1) BST와 마찬가지로 각 노드별 높이 균형을 보장하기 위한 회전을 통한 운영
-        (2) 4가지의 경우 존재
-            [1] Single Left Rotation
-            [2] Double Left Rotation
-            [3] Single Right Rotation
-            [4] Double Right Rotation
-            > SLR, DLR : left(+2)
-            > SRR, DRR : right(-2)
-            - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case1.png" width="1000" height="300" />
-            - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case2.png" width="1000" height="300" />
-            - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case3.png" width="1000" height="300" /> 
+  - AVL에서의 삽입
+      (1) BST와 마찬가지로 각 노드별 높이 균형을 보장하기 위한 회전을 통한 운영
+      (2) 4가지의 경우 존재
+          [1] Single Left Rotation
+          [2] Double Left Rotation
+          [3] Single Right Rotation
+          [4] Double Right Rotation
+          > SLR, DLR : left(+2)
+          > SRR, DRR : right(-2)
+          - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case1.png" width="1000" height="300" />
+          - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case2.png" width="1000" height="300" />
+          - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case3.png" width="1000" height="300" /> 
         
-  (3) 검색 트리를 이루는 요소
-      [1] 검색, 최소, 최대, 직전, 직후, 삽입, 삭제 등
-      [2] 딕셔너리와 우선순위 큐를 이용
-      [3] 기본 연산은 트리의 높이에 비례한다
-  
-  (4) 트리별 높이 시간 복잡도
-      [1] 완전 이진 트리 : Ω(lg n)
-      [2] 선형 체인 트리 : Ω(n)
-      [3] 임의로 만들어진 이진 트리 : O(lg n)
-  
-  (5) 용어
-      [1] 루트 : 조상이 없다
-      [2] 리프 : 자식이 없다
-      [3] 내부 : 리프가 아닌 노드
-      [4] 높이 : 루트에서 리프까지의 거리
-  
-  (6) 이진 트리의 종류
-      [1] Degenerate
-          오직 한명의 자식을 갖는 트리
-          선형 리스트와 유사
-          높이 : O(n) (n개의 노드에서)
-      [2] Balanced
-          거의 두명의 자식을 갖는 트리
-          검색에 유용한 트리
-          높이 : O(lg n) (n개의 노드에서)
-      [3] Complete
-          항상 두명의 자식을 갖는 트리
-       
-       
-- 이진 검색 트리의 개념, 특성
-  (1) 이진 검색 트리의 개념
-      key, 데이터, left(왼쪽 자식), right(오른쪽 자식), p(부모) 등의 필드를 갖는다.     
-  (2) 이진 검색 트리의 특성
-      x가 이진 검색 트리의 한 노드이다. 이때 y가 x의 왼쪽 서브 트리의 한 노드이면, y.key <= x.key를 만족한다. 그리고 y가 x의 오른쪽 서브 트리의 한 노드이면, y.key >= x.key를 만족한다. 
-  (3) 구현 관점의 특성
-      연결된 데이터 구조로 표현됨(각 노드는 객체를 의미)   > 키 + 위성 데이터
-
-  
-- 이진 검색 트리 순회
-  > 트리의 각 노드에서 재귀적으로 호출하므로, n개의 노드로 이루어진 이진 검색 트리에서 Θ(n)을 만족
-  
-  (1) 전위 트리 순회
-    ~~~
-        PREORDER-TREE-WALK(x)
-            if x != NIL
-                print x.key
-                PREORDER-TREE-WALK(x.left)           
-                PREORDER-TREE-WALK(x.right)
-    ~~~ 
-        
-    
-    > 시간 복잡도
-    ~~~
-        1. BaseCase
-        2. n이 k보다 작을때, 참이라고 가정
-        3. n이 k일때, 증명
-    ~~~
-        >  
-        
-  (2) 중위 트리 순회
-    ~~~
-        INORDER-TREE-WALK(x)
-            if x != NIL
-                INORDER-TREE-WALK(x.left)           
-                print x.key
-                INORDER-TREE-WALK(x.right)
-    ~~~ 
-    
-    > 시간 복잡도
-    ~~~
-        1. BaseCase
-        2. n이 k보다 작을때, 참이라고 가정
-        3. n이 k일때, 증명
-    ~~~
-        > n개의 노드로 이루어진 서브 트리의 루트에 대하여 호출시, 걸리는 시간을 T(n)이라 한다.
-          중위 트리 순회는 n개의 노드를 모두 방문하기에, T(n) = Ω(n)
-        > 빈 트리의 경우, 상수 c>0에 대해 T(0) = c (경미한 상수 시간 소모)         
-        > n>0의 경우 왼쪽 서브 트리가 k개의 노드를, 오른쪽의 서브 트리가 n-k-1을 갖는다.
-          이를 다시 표현하면 T(n) <= T(k) + T(n-k-1) + d
-        > 치환을 통해, T(n) <= (c+d)n + c를 증명
-          1) n = 0
-            (c+d) * 0 + c = c = T(0)
-          2) T(n) <= T(k) + T(n-k-1) + d
-                  <= ((c+d)k + c) + ((c+d)(n-k-1) + c) + d
-                  <= (c+d)n + c - (c+d) + c + d
-                  <= (c+d)n + c
-                  
-    
-
