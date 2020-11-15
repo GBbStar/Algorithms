@@ -614,19 +614,129 @@
       1. 이진 탐색 트리의 성질을 기반으로 가짐
       2. 트리 내의 어떤 노드에서든, 노드 기준 좌측 서브트리의 높이와 우측 서브트리의 높이 차이는 최대 1이다.
 
+
   - AVL 트리의 특성
-      뿌리 왼쪽과 오른쪽 하위 트리의 높이가 최대 1씩 차이가 나고, 오른쪽 및 왼쪽 하위 트리도 AVL 트리인 BST이다.
+      1. 뿌리 왼쪽과 오른쪽 하위 트리의 높이가 최대 1씩 차이가 나고, 오른쪽 및 왼쪽 하위 트리도 AVL 트리인 BST이다.
+      2.  BST의 특징을 기본으로, 각 노드별 높이 균형을 보장 > 회전 운영
+  ~~~
+  function rotateRight (root):
+      exchange left subtree with right subtree of left subtree
+      make left subtree a new root
+
+  function rotateLeft (root):
+      exchange right subtree with left subtree of right subtree
+      make right subtree a new root
+  ~~~
+
 
   - AVL에서의 삽입
-      1. BST와 마찬가지로 각 노드별 높이 균형을 보장하기 위한 회전을 통한 운영
-      2. 4가지의 경우 존재
+      1. 회전해야 하는 4가지의 경우 존재
           (1) Single Left Rotation
           (2) Double Left Rotation
           (3) Single Right Rotation
           (4) Double Right Rotation
           > SLR, DLR : left(+2)
           > SRR, DRR : right(-2)
-          - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case1.png" width="1000" height="300" />
-          - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case2.png" width="1000" height="300" />
-          - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case3.png" width="1000" height="300" /> 
+          - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case1.png" width="700" height="300" />
+          - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case2.png" width="700" height="300" />
+          - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case3.png" width="700" height="300" /> 
+      2. 기존 이진 탐색 트리 방식대로 노드 삽입.
+      3. 삽입한 노드로부터 루트로 올라가면서 먼저 만나게 되는 불균형을 먼저 바로 잡아야 한다. 
+    ~~~
+        function AVLInsert (root, newData):
+            if subtree is empty:
+                insert newData as root
+                return root
+            
+            if newData < root:
+                AVLInsert (left subtree, newData)
+                if left subtree is taller:
+                    leftBalance (root)
+            
+            else:
+                AVLInsert (right subtree, newData)
+                if right subtree is taller:
+                    rightBalance (root)
+            
+            return root
+            
         
+        
+        function leftBalance (root):
+            if left tree is higher:
+                rotateRight (root)
+            else:
+                rotateLeft (left subtree)
+                rotateRight (root)
+      
+      
+        functino rightBalance (root):
+            if right tree is higher:
+                rotateLeft (root)
+            else:
+                rotateRight (right subtree)
+                rotateLeft (root)    
+      ~~~
+
+
+  - AVL에서의 삭제
+      1. BST의 삭제 방법과 동일하게 노드(w) 삭제
+      2. 노드(w)로부터 불균형한 첫번째 노드(z)를 찾는다. 
+      3. 불균형한 노드(z)의 자식노드들 중 깊이가 큰 자식노드(y)를 선정
+      4. 깊이가 큰 자식노드(y)의 자식노드들 중 깊이가 큰 노드(x)를 선정
+      5. z를 루트로 하는 자식트리를 재배열. (4가지 케이스가 존재)
+          [1] z의 왼쪽 자식이 y, y의 왼쪽 자식이 x        (left left)
+          [2] z의 왼쪽 자식이 y, y의 오른쪽 자식이 x      (left right)
+          [3] z의 오른쪽 자식이 y, y의 오른쪽 자식이 x    (right right)
+          [4] z의 오른쪽 자식이 y, y의 왼쪽 자식이 x      (right left)
+      ~~~
+        function AVLDelete (root, dltKey, success):
+            if subtree is empty:
+                set success to false
+                return null
+            
+            if dltKey < root:
+                set left subtree to AVLDelete (left subtree, dltKey, success)
+                if tree is shorter:
+                    set root to deleteRightBalance (root)
+            
+            else if dltKey > root:
+                set right subtree to AVLDelete (right subtree, dltKey, success)
+                if tree is shorter:
+                    set root to deleteLeftBalance (root)
+            
+            else:
+                save root
+                if no right subtree:
+                    set success to true
+                    return left subtree
+                
+                else if no left subtree:
+                    set success to true
+                    return right subtree
+                
+                else:
+                    find largest node on left subtree
+                    save largest key
+                    copy data in largest to root
+                    set left subtree to AVLDelete (left subtree, largest key, success)
+                    if tree is shorter:
+                        set root to deleteRightBalance (root)
+            return root
+      
+      
+          function deleteRightBalance (root):
+              if tree is not balanced:
+                  set rightOfRight to right subtree
+                  if left of rightOfRight is higher:
+                      set leftOfRight to left subtree of rightOfRight
+                      set right subtree to rotateRight (rightOfRight)
+                      set root to rotateLeft (root)
+                  else:
+                      set root to rotateLeft (root)
+              return root
+      ~~~
+      
+      
+          
+  
