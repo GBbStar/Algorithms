@@ -626,7 +626,9 @@
         [4] Double Right Rotation
         > SLR, DLR : left(+2)
         > SRR, DRR : right(-2)
-        
+         - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case1.png" width="1000" height="300" />
+         - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case2.png" width="1000" height="300" />
+         - <img src="https://github.com/HwangGyuBin/Algorithms/blob/master/Algorithm%20animation/case3.png" width="1000" height="300" /> 
         
   (3) 검색 트리를 이루는 요소
       [1] 검색, 최소, 최대, 직전, 직후, 삽입, 삭제 등
