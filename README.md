@@ -1316,3 +1316,226 @@
             array           O(V)                  O(1)                  O(V<sup>2</sup>)
             binary heap     O(lg V)               O(lg V)               O(ElgV)
             Fibonacci heap  O(lg V)               O(1)                  O(E+VlgV)
+
+
+
+
+* Single-Source Shortest Path
+    - 문제 
+        1. 상황은 주어진 weighted directed graph G에서, 주어진 시작 노드 s에서 또 다른 노드 v까지의 최소 비용 경로를 찾을때이다.
+        2. 최단 경로는 최소 비용이다
+        3. 비용은 경로상의 간선들의 비용 합이다.
+    
+    - Optimal Substructure
+        1. 최단 경로는 최단 서브경로들로 이루어져있다.
+        2. 증명은 Contcontradiction을 이용한다.
+            [1] subpath가 최단 경로가 아니라고 가정
+            [2] 그곳에는 반드시 더 짧은 경로의 subpath가 존재한다.
+            [3] 현재 subpath는, 더 짧은 경로를 갖는 subpath로 대체될 수 있다.
+            [4] 하지만 전체 경로는 이전 상태가 최단 경로였기에, 지금은 최단 경로가 아니다
+        > 모순
+        
+    - Shortest Path Properties
+        1. δ(u,v)를 u부터 v까지의 최단 경로의 비중치라고 하자
+        2. 최단 경로는 Triangle inequality(삼각 부등식)을 만족한다.
+           δ(u,v) <= δ(u,x) + δ(x,v)
+        3. 증명은 다음과 같다.
+        - Relaxatoin
+            1. 최단 경로 알고리즘의 핵심 키는 휴식이다.
+            2. 아이디어는, 모든 노드에 있어서 δ(s,v)에 대한 d[v]의 upper bound를 유지하는 것
+            ~~~
+              Relax(u,v,w) 
+                  if (d[v] > d[u]+w) 
+                      then d[v]=d[u]+w;
+            ~~~
+            
+            
+    - Bellman-Ford Algorithm
+        1. 의사코드
+            ~~~
+                BellmanFord()
+                    for each v ∈ V
+                        d[v] = ∞
+                    d[s] = 0
+                    for i=1 to |V|-1
+                        for each edge (u,v) ∈ E
+                            Relax(u, v, w(u,v))
+                    for each edge (u,v) ∈ E
+                        if (d[v] > d[u] + w(u,v))
+                            return no solution
+            ~~~
+        
+        2. Single-Source 최단 경로 문제
+            [1] 각 노드에 대해서 d[v], π[v] 계산한다.
+            [2] negative edge weights를 허용한다.
+            [3] s로부터 도달할 수 있는 negative-weight가 존재하지 않는다면 true
+                그렇지 않다면 false를 반환
+            [4] 아이디어
+                모든 간선을 순회(|V|-1번), 각 순회마다 각 간선에 대하여 relaxation을 수행
+                
+        
+        
+    - Dijkstra's Algorithm
+        1. 입력
+            [1] 방향그래프 G(V,E), 이때 그래프에는 negative weight가 존재하지 않는다.
+            [2] 시작점 src
+            
+        2. 출력
+            [1] 최단 경로의 길이.(시작 지점부터 G의 모든 노드들 간의)
+        
+        3. 아이디어
+            [1] V = {1, 2, 3, ..., n }이고, 1은 시작 노드이다.
+            [2] S : 이미 선택된 노드들의 집합
+            [3] C : 남아있는 노드들의 집합
+            [4] D[1, 2, ..., n] : 최단 경로의 비용
+            [5] 1(소스)부터 S = {1, 2, …, n}까지 거리가 최소인 C의 노드 v를 S에 반복적으로 추가
+        
+        4. 의사코드
+            ~~~
+                Dijkstra ( L[1,…,n,  1,…,n] )
+                /* L is cost array, L[i,j] : cost if (i,j) in E  or  : infinity if (i,j) is not in E */
+                C <- { 2, 3, …, n }   
+                    for i <- 2 to n do D[i] <- L[1,i]   
+                        repeat   (n-2) times                 
+                            v <- a node in C s.t. D[v] = Min{ D[w] } for each w in C                                             C <- C – {v}                 
+                            for each w in C do D[w] <- Min{ D[w], D[v]+L[v,w] }   
+                return D
+            ~~~
+        5. Single-source 최단 경로 문제
+            [1] negatice-weight edge가 없다
+            [2] 2개의 노드 집합을 유지한다. 
+                S = 최종 최단 경로에 존재하는 노드들(weight는 이미 정해짐)
+                C = V-S에 존재하는 노드들
+            [3] V-S에 존재하는 노드 u를 반복적으로 선택하고, minimum 최단 경로 추정값 d[v]를 함께 선택한다.     
+            
+    - Shortest Path 문제
+        1. 입력
+            [1] 방향 그래프 G = (V,E)
+            [2] weight 함수 w : E > R
+        
+        2. 경로의 weight
+            [1] p = <v<sub>0</sub>, v<sub>1</sub>, ..., v<sub>k</sub>>
+            [2] w(p) = i는 1부터 k까지 w(v<sub>i-1</sub>, v<sub>i</sub>)의 합
+        
+        3. 최단 경로의 weight
+            [1] δ(u,v) = min {w(p) : u > v까지의 경로가 존재한다면}
+            [2] 최단 경로(u에서 v로 가는)은 다음을 만족하는 어떤 경로 p이다 : w(p) = δ(u,v)
+            
+        4. 최단 경로 Representation
+            [1] d[v] = δ(s,v) : 최단 경로 추정
+                처음엔 d[v] = ∞이지만, 알고리즘이 진행될수록 줄어든다
+            [2] π[v] = 경로 s에 존재하는 노드 v의 이전 노드
+                만약 이전 노드가 존재하지 않으면 NIL
+                π는 트리를 점차 줄이는데, 이는 최단 경로 트리이다.
+            [3] 최단 경로와 최단 경로 트리는 유일하지 않다.
+            
+    - Relaxation
+        1. Relaxing an edge(u,v)
+            [1] u를 통해 지남으로써 지금까지 발견된 v로의 최단 경로를 개선할 수 있는지 테스트
+            [2] 만약 d[v] > d[u] + w(u,v)이라면, 최단 경로를 개선시킬 수 있다. 
+                d[v], π[v]를 업데이트
+                
+                
+* All-Pairs Shortest Paths
+    - 각 노드에 대하여 한번씩 Bellman-Ford 수행
+        1. O(V<sup>2</sup>E)
+           만약 그래프가 밀집이라면(E=θ(V<sup>2</sup>)), O(V<sup>2</sup>E)가 된다.
+        2. negative-weight 간선이 없다면, Dijkstra 알고리즘을 각 노드에 적용한다.
+           바이너리 힙에서 O(VElgV)이다. (밀집일 경우 O(V<sup>3</sup>lg V)이다)
+           피보나치 힙에선 O(EV+V<sup>2</sup>lg V)이다. (밀집의 경우 O(V<sup>3</sup>이다)
+    - 입력
+        1. 방향 그래프 G = (V,E)
+        2. weight 함수 w : E > R
+        
+    - 계산
+        1. 그래프의 모든 노드에 대하여, 최단 경로
+        2. 결과 표현 (n*n 매트릑스에 최단 경로 δ(u,v)를 표시)
+    - 설명
+        1. 주어진 weight 인접 매트릭스에 해당하는 그래프 G가 존재.
+           노드 번호는 1부터 n까지이고, W = (w<sub>ij</sub>), n*n 매트릭스, |V| = n가 존재할때
+           w<sub>ij</sub>는 0(i = j), weight of (i,j)(i != j, (i,j)∈E), ∞ (i != j, (i,j) !∈ E)의 값을 갖는다.
+        2. 결과는 n*n의 매트릭스가 나오고, D = (d<sub>ij</sub>), d<sub>ij</sub> = δ(i,j)이다
+        3. 동적 프로그래밍을 해결하는데 사용된다
+        
+    - Optimal Substructure of a Shortest Path
+        1. 성질
+            [1] All subpaths of a shortest path are shortest paths
+            [2] i부터 j로 가는 최단 경로 p가 m개의 간선을 갖는다고 하자.
+            [3] 만약 i = j라면 w(p) = 0이고, p에는 간선이 없다.
+        2. 주장
+            i != j이고, 중간에 k라는 노드가 존재하며,
+            만약 i부터 j까지의 p가 존재하며, p'이라는 i부터 중간 노드 k까지의 최단 경로 + w(k,w)와 같다면
+            [1] p'은 최대 m-1개의 간선을 갖는다.
+            [2] p'은 최단 경로이다.
+            [3] δ(i,j) = δ(i,k) + w<sub>kj</sub>이다            
+
+    - Recursive Solution
+        1. l<sub>ij</sub>(m)는 i부터 j까지의 최단 경로의 weight를 의미하는 동시에, 최대 m개의 간선을 갖음을 의미한다.
+        2. m = 0 : l<sub>ij</sub>(0) = 0(i = j) or ∞ (i != j)
+           m >= 1 : l<sub>ij</sub>(m) = min {l<sub>ij</sub>(m-1), min{l<sub>ik</sub>(m-1)+w<sub>kj</sub>(m)}} (1 <= k <= n)
+                                      = min {l<sub>ik</sub>(m-1)+w<sub>kj</sub>(m)} (1 <= k <= m)
+        3. i부터 j까지의 최단 경로는 최대 m-1개의 간선을 갖는다.
+        4. 최대 m개의 간선을 갖는 i부터 j까지의 최단 경로는, j의 가능한 모든 predecessors를 포함한다.
+        
+    - Computing the Shortest Paths
+        1. m = 1: l<sub>ij</sub>(1) = W<sub>ij</sub>
+            i부터 j가지의 간선은 1개로 제한된다.
+            L(1) = W
+        2. W = (w<sub>ij</sub>)가 주어지고, L(1), L(2), ... , L(n-1)을 계산한다. 
+           이때, L(m) = (l<sub>ij</sub>(m))이다.
+        3. L(n-1)은 실제 최단 경로를 포함한다.
+            주어진 L(m-1)과 W로 L(m)을 계산한다.
+            = 하나의 간선을 추가한 최단 경로로 확장한다,
+        4. 만약 그래프가 negative cycle을 갖지 않으면, 모든 단순 최단 경로는 최대 n-1개의 간선을 갖는다.
+           δ(i,j) = l<sub>ij</sub>(n-1) and l<sub>ij</sub>(n), l<sub>ij</sub>(n+1), ...m l<sub>ij</sub>(n-1)
+           
+    - 최단 경로 확장
+        1. l<sub>ij</sub>(m) = min {l<sub>ik</sub>(m-1)+w<sub>kj</sub>(m)} (1<=k<=n)
+        2. 의사코드
+            ~~~
+                l_ij(m) = min { l_ik(m-1) + w_kj } (1<=k<=n)
+                    create L', an nxn matrix
+                    for i <- 1 to n
+                        do for j <- i to n
+                            do i_ij' = ∞
+                                for k <- 1 to n
+                                    do i_ij' = min (i_ij', i_ik + w_kj)
+                    return L'
+            ~~~
+
+
+    - Slow-APSP(W,n)
+        1. 의사코드
+            ~~~
+                L(1) = W
+                for m = 2 to n-1
+                    do L(m) = EXTEND(L(m-1), W, n)
+                return L(n-1)
+            ~~~
+        2. 시간복잡도 = θ(n<sup>4</sup>)
+
+    - Running Time 향상시키기
+        1. 모든 L(m) 매트릭스를 계산할 필요 없음
+        2. 만약 negative-weight cycle이 없다면, L(m) = L(n-1) for all m >= n-1이 성립
+        3. L(n-1) 계산은 sequence 계산을 통해 계산할 수 있다.
+        
+    - Faster-APSP(W,n)
+        1. 의사코드
+            ~~~
+                L(1) = W
+                m = 1
+                while m < n-1
+                    do L(2m) = EXTEND(L(m), L(m), n)
+                       m = 2m
+                return L(m)
+            ~~~
+        2. 시간복잡도 : θ(n<sup>3</sup>lg n)
+        
+* Floyd-Warshall 알고리즘
+    - 입력
+        1. 방향, weighted 그래프 G=(V,E)
+        2. Negative-weight 간선이 존재할 수 있다.
+        3. Negative-weight cycle이 그래프에 존재하지 않는다.
+        
+    - 계산
+        1. 그래프의 모든 노드에 대한 최단경로
