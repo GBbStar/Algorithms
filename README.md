@@ -1539,3 +1539,51 @@
         
     - 계산
         1. 그래프의 모든 노드에 대한 최단경로
+    
+    
+* 최단 경로 구조
+    - 그래프 G의 노드들 V = {1, 2,..., n}
+    - 경로 p = <v<sub>1</sub>, v<sub>2</sub>, ..., v<sub>l</sub>>
+    - p의 intermediate 노드는 {v2, v3, ..., v<sub>1-1</sub>} 중의 어떤 노드이다.
+    -i에서 j로 가는 모든 경로를 고려하고, 이 경로의 intermediate vertices 들은 i부터 n까지 존재하고, 1부터 k까지의 부분 집합이 존재한다. 
+        이때, 이 경로들에 존재하는 최소 비용 경로를 찾는다.
+            "No vertex on these paths has index > k"
+    1. 1부터 k까지 다 고려했는데 intermediate가 아닐 경우  
+         intermediate vertices from {1, 2, …, k}를 갖는 i에서 j로 가는 최단 경로는, intermediate vertices from  {1, 2, …, k - 1}를 갖는 i에서 j로 가는 최단 경로이다. 
+
+    2. 1부터 k까지 다 고려했는데 intermediate가 맞을 경우  
+         1. k는 p1, p2의 intermediate가 아니다.
+         2. p1은 i부터 k로 향하는(1,2,...,k-1) 최단 경로이다 
+         3. p2는 k부터 j로 향하는(1,2,...,k-1) 최단 경로이다.
+         
+    - Recursive Soulution
+        1. d<sub>ij</sub> = intermediary 노드{1, 2,..., k}를 갖는 i부터 j로 가는 최단 경로의 weight 
+        2. k = 0 
+            > d<sub>ij</sub>(k) = w<sub>ij</sub>
+        3. k >= 1
+            > [1] k는 경로 p의 intermediate 노드가 아닌경우
+                  d<sub>ij</sub>(k) = d<sub>ij</sub>(k-1)
+            > [2] k가 경로 p의 intermediate 노드인 경우
+                  d<sub>ij</sub>(k) = d<sub>ik</sub>(k-1) + d<sub>kj</sub>(k-1)
+        4. 최종 결과
+            > d<sub>ij</sub>(n) = δ(i, j)  ∀i, j ∈ V
+
+* FLOYD-WARSHALL(W)
+    1. 의사코드
+        ~~~
+            n = rows[W]
+            D(0) = W
+            for k=1 to n
+                do for i=1 to n
+                    do for j=1 to n
+                        do d_ij(k) = min(d_ij(k-1), d_ik(k-1) + d_kj(k-1))
+            return D(n)            
+        ~~~
+    2. 시간복잡도
+        θ(n<sup>3</sup>)
+
+* Constructing a Shortest Path
+    1. π<sub>ij</sub>(0) = Nil  i=j or w<sub>ij</sub> =  ∞
+                            1   i!=j and w<sub>ij</sub> != ∞
+    2. π<sub>ij</sub>(k) = π<sub>ij</sub>(k-1)    d<sub>ij</sub>(k-1) <= d<sub>ik</sub>(k-1) + d<sub>kj</sub>(k-1)
+                         = π<sub>kj</sub>(k-1)    otherwise
